@@ -139,6 +139,10 @@ const Container = styled.section`
     justify-content: center;
   }
 
+  button[disabled] {
+    opacity: 0.7;
+  }
+
   a {
     color: #52b6ff;
     font-size: 14px;
