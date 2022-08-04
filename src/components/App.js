@@ -2,24 +2,24 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Habits from "./Habits";
+import Habits from "./Habits/Habits";
 import LoginPage from "./LoginPage";
 import SignUpPage from "./SignUpPage";
 import GlobalStyle from "./style/GlobalStyle";
 
 import UserContext from "./Context/UserContext";
 import LoginContext from "./Context/LoginContext";
-import Today from "./Today";
+import Today from "./Today/Today";
 
 function App() {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
-  console.log(token, user);
+  const [refresh, setRefresh] = useState(false);
 
   return (
     <>
       <GlobalStyle />
-      <UserContext.Provider value={{ user, setUser }}>
+      <UserContext.Provider value={{ user, setUser, refresh, setRefresh }}>
         <LoginContext.Provider value={{ token, setToken }}>
           <BrowserRouter>
             <Routes>
