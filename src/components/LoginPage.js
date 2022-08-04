@@ -40,7 +40,7 @@ export default function LoginPage() {
   }
 
   return (
-    <Container>
+    <Container disabled={disabled}>
       <img src={Logo} alt="Logo" />
       <form onSubmit={handleForm}>
         <input
@@ -72,7 +72,7 @@ export default function LoginPage() {
             ></ion-icon>
           </div>
         </Wrapper>
-        <button type="submit">
+        <button disabled={disabled} type="submit">
           {!disabled ? (
             "Entrar"
           ) : (
@@ -143,6 +143,7 @@ const Container = styled.section`
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: ${ (props) => (props.disabled ? "0.7" : "1")};
   }
 
   a {
