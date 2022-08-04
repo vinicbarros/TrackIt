@@ -84,7 +84,7 @@ export default function HabitsForm({ setCreateHabit, create }) {
           </h5>
           <button disabled={disabled} type="submit">
             {!disabled ? (
-              "Entrar"
+              "Salvar"
             ) : (
               <ThreeDots color="#FFFFFF" height={40} width={40} />
             )}
