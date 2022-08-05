@@ -11,12 +11,12 @@ export default function Habit({ habit, daysSelected }) {
 
   function deleteHabits() {
     if (window.confirm("Você quer deletar este hábito?")) {
-        deleteHabit(habit.id, token)
-          .then((resp) => {
-            console.log(resp);
-            setRefresh(!refresh);
-          })
-          .catch((error) => console.log(error));
+      deleteHabit(habit.id, token)
+        .then((resp) => {
+          console.log(resp);
+          setRefresh(!refresh);
+        })
+        .catch((error) => console.log(error));
     }
   }
 
@@ -26,9 +26,13 @@ export default function Habit({ habit, daysSelected }) {
       <Wrap>
         {daysNumber.map((day, key) =>
           daysSelected.includes(day.id) ? (
-            <div key={key} className="selected">{day.sigla}</div>
+            <CheckedBox key={key}>
+              {day.sigla}
+            </CheckedBox>
           ) : (
-            <div key={key} className="not">{day.sigla}</div>
+            <UnCheckedBox key={key}>
+              {day.sigla}
+            </UnCheckedBox>
           )
         )}
       </Wrap>
@@ -52,11 +56,6 @@ const HabitBox = styled.section`
     font-weight: 400;
   }
 
-  .selected {
-    background-color: #d4d4d4;
-    color: #ffffff;
-  }
-  
   ion-icon {
     position: absolute;
     top: 15px;
@@ -79,11 +78,19 @@ const Wrap = styled.div`
     border-radius: 5px;
     font-size: 20px;
     font-weight: 400;
-    color: #dbdbdb;
-    background-color: #ffffff;
   }
 
   div + div {
     margin-left: 4px;
   }
+`;
+
+const CheckedBox = styled.div`
+  color: #ffffff;
+  background-color: #d4d4d4;
+`;
+
+const UnCheckedBox = styled.div`
+  color: #dbdbdb;
+  background-color: #ffffff;
 `;

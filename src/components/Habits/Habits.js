@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+import { ThreeDots } from "react-loader-spinner";
 import { getHabits } from "../../services/TrackIt";
 import LoginContext from "../Context/LoginContext";
 import UserContext from "../Context/UserContext";
@@ -18,12 +19,17 @@ export default function Habits() {
     getHabits(token)
       .then((response) => setUserHabits(response.data))
       .catch((error) => console.log(error.response));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refresh]);
 
   return (
-      <>
-        <Navbar />
+    <>
+      <Navbar />
+      {userHabits.length === 0 ? (
+        <Load>
+          <ThreeDots color="#00BFFF" height={80} width={80} />
+        </Load>
+      ) : (
         <ContentHabits>
           <span>
             <h3>Meus hábitos</h3>
@@ -44,20 +50,32 @@ export default function Habits() {
                 para começar a trackear!
               </p>
             ) : (
-              userHabits.map( (habit, key) => (
-                <Habit habit={habit} key={key} daysSelected={habit.days}/>
+              userHabits.map((habit, key) => (
+                <Habit habit={habit} key={key} daysSelected={habit.days} />
               ))
             )}
           </BoxHabits>
         </ContentHabits>
-        <Footer />
-      </>
+      )}
+
+      <Footer />
+    </>
   );
 }
+
+const Load = styled.section`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding-top: 98px;
+  background: #f2f2f2;
+`;
 
 const ContentHabits = styled.section`
   padding-top: 70px;
   min-height: 100vh;
+  padding-bottom: 100px;
   background: #f2f2f2;
   display: flex;
   flex-direction: column;
@@ -72,18 +90,18 @@ const ContentHabits = styled.section`
   }
 
   h3 {
-    color: #126BA5;
+    color: #126ba5;
     font-size: 22px;
     font-weight: 400;
   }
 
   button {
-    background-color: #52B6FF;
+    background-color: #52b6ff;
     width: 40px;
     height: 35px;
     border: none;
     border-radius: 4.7px;
-    color: #FFFFFF;
+    color: #ffffff;
     font-size: 27px;
     font-weight: 400;
   }
