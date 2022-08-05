@@ -1,17 +1,21 @@
+import { useContext } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
+import UserContext from "../Context/UserContext";
 
 export default function Footer() {
+  const { percent } = useContext(UserContext);
+
   return (
     <FooterContent>
       <Link to="/habitos">Hábitos</Link>
       <Link to="/hoje">
         <WrapCircle>
           <CircularProgressbar
-            value={66}
+            value={percent}
             text={`Hoje`}
             background
             backgroundPadding={6}
@@ -39,6 +43,13 @@ const FooterContent = styled.footer`
   display: flex;
   align-items: center;
   justify-content: space-around;
+
+  a {
+    text-decoration: none;
+    color: #52B6FF;
+    font-size: 18px;
+    font-weight: 400;
+  }
 `;
 
 const WrapCircle = styled.div`

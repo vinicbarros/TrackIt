@@ -15,11 +15,14 @@ function App() {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
   const [refresh, setRefresh] = useState(false);
+  const [percent, setPercent] = useState(0);
 
   return (
     <>
       <GlobalStyle />
-      <UserContext.Provider value={{ user, setUser, refresh, setRefresh }}>
+      <UserContext.Provider
+        value={{ user, setUser, refresh, setRefresh, percent, setPercent }}
+        >
         <LoginContext.Provider value={{ token, setToken }}>
           <BrowserRouter>
             <Routes>
