@@ -26,7 +26,7 @@ export default function LoginPage() {
         setUser(response.data);
         setToken(response.data.token)
         setDisabled(false);
-        navigate("/habitos");
+        navigate("/hoje");
       })
       .catch((error) => {
         console.log(error);
