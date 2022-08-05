@@ -13,6 +13,7 @@ import UserContext from "../Context/UserContext";
 
 export default function Today() {
   const [todayHabits, setTodayHabits] = useState([]);
+  const [ showScreen, setShowScreen ] = useState(false);
   const { token } = useContext(LoginContext);
   const { refresh, setRefresh, percent, setPercent } = useContext(UserContext);
 
@@ -23,17 +24,22 @@ export default function Today() {
         const done = response.data.filter((ths) => ths.done);
         const dayPercentage = Math.ceil(
           (done.length / response.data.length) * 100
-        );
-        setPercent(dayPercentage);
+          );
+        if (isNaN(dayPercentage)) {
+          setPercent(0);
+        } else {
+          setPercent(dayPercentage);
+        }
+        setShowScreen(true);
       })
       .catch((error) => console.log(error));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token, refresh]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [token, refresh]);
 
   return (
     <>
       <Navbar />
-      {todayHabits.length === 0 ? (
+      {!showScreen ? (
         <Load>
           <ThreeDots color="#00BFFF" height={80} width={80} />
         </Load>

@@ -14,18 +14,20 @@ export default function Habits() {
   const { refresh } = useContext(UserContext);
   const [userHabits, setUserHabits] = useState([]);
   const [createHabit, setCreateHabit] = useState(false);
+  const [ showScreen, setShowScreen ] = useState(false);
 
   useEffect(() => {
     getHabits(token)
       .then((response) => setUserHabits(response.data))
       .catch((error) => console.log(error.response));
+      setShowScreen(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refresh]);
 
   return (
     <>
       <Navbar />
-      {userHabits.length === 0 ? (
+      {!showScreen ? (
         <Load>
           <ThreeDots color="#00BFFF" height={80} width={80} />
         </Load>
