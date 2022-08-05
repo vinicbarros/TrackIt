@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+import { ThreeDots } from "react-loader-spinner";
+
 import today from "../Utilities/setday";
 
 import { getTodayHabits } from "../../services/TrackIt";
@@ -12,32 +14,65 @@ import UserContext from "../Context/UserContext";
 export default function Today() {
   const [todayHabits, setTodayHabits] = useState([]);
   const { token } = useContext(LoginContext);
-  const { refresh, setRefresh } = useContext(UserContext);
+  const { refresh, setRefresh, percent, setPercent } = useContext(UserContext);
 
   useEffect(() => {
     getTodayHabits(token)
-      .then((response) => setTodayHabits(response.data))
+      .then((response) => {
+        setTodayHabits(response.data);
+        const done = response.data.filter((ths) => ths.done);
+        const dayPercentage = Math.ceil(
+          (done.length / response.data.length) * 100
+        );
+        setPercent(dayPercentage);
+      })
       .catch((error) => console.log(error));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token, refresh]);
 
   return (
     <>
       <Navbar />
-      <TodayContent>
-        <Wrapper>
-          <h1>{today}</h1>
-          <h3>Nenhum hábito concluído ainda</h3>
-        </Wrapper>
-        <HabitsCheckBox>
-          {todayHabits.map((habit, index) => (
-            <TodayHabit key={index} todayHabits={habit} setRefresh={setRefresh} refresh={refresh}/>
-          ))}
-        </HabitsCheckBox>
-      </TodayContent>
+      {todayHabits.length === 0 ? (
+        <Load>
+          <ThreeDots color="#00BFFF" height={80} width={80} />
+        </Load>
+      ) : (
+        <TodayContent>
+          <Wrapper>
+            <h1>{today}</h1>
+            {percent <= 0 ? (
+              <h2>Nenhum hábito concluído ainda</h2>
+            ) : (
+              <h3>{percent.toFixed()}% dos hábitos concluídos</h3>
+            )}
+          </Wrapper>
+          <HabitsCheckBox>
+            {todayHabits.map((habit, index) => (
+              <TodayHabit
+                key={index}
+                todayHabits={habit}
+                setRefresh={setRefresh}
+                refresh={refresh}
+              />
+            ))}
+          </HabitsCheckBox>
+        </TodayContent>
+      )}
+
       <Footer />
     </>
   );
 }
+
+const Load = styled.section`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding-top: 98px;
+  background: #f2f2f2;
+`;
 
 const TodayContent = styled.section`
   padding-top: 70px;
@@ -54,9 +89,16 @@ const TodayContent = styled.section`
     color: #126ba5;
   }
 
-  h3 {
+  h2 {
     margin-bottom: 18px;
     color: #bababa;
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  h3 {
+    margin-bottom: 18px;
+    color: #8fc549;
     font-size: 18px;
     font-weight: 400;
   }

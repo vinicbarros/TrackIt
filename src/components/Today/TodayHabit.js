@@ -1,43 +1,63 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
+import { Grid } from "react-loader-spinner";
 import checkImg from "../../assets/img/Group.svg";
 import { checkDoneHabit, uncheckDoneHabit } from "../../services/TrackIt";
 import LoginContext from "../Context/LoginContext";
 
 export default function TodayHabit({ todayHabits, setRefresh, refresh }) {
   const done = todayHabits.done;
+  const isHigh = (todayHabits.currentSequence >= todayHabits.highestSequence);
   const { token } = useContext(LoginContext);
-  
+  const [disable, setDisable] = useState(false);
+
   function check() {
+    setDisable(true);
     checkDoneHabit(todayHabits.id, token)
       .then((response) => {
         setRefresh(!refresh);
+        setDisable(false);
       })
       .catch((error) => console.log(error));
   }
 
   function unCheck() {
+    setDisable(true);
     uncheckDoneHabit(todayHabits.id, token)
-    .then((response) => {
+      .then((response) => {
         setRefresh(!refresh);
+        setDisable(false);
       })
       .catch((error) => console.log(error));
   }
 
   return (
-    <HabitContent>
+    <HabitContent done={done}>
       <Wrapper>
         <h2>{todayHabits.name}</h2>
-        <p>Sequência atual: {todayHabits.currentSequence} dias</p>
-        <p>Seu recorde: {todayHabits.highestSequence} dias</p>
+        <p>
+          Sequência atual:{" "}
+          <HighText done={done}>{todayHabits.currentSequence} dias </HighText>
+        </p>
+        <p>
+          Seu recorde: <HighScore isHigh={isHigh} done={done}> {todayHabits.highestSequence} dias</HighScore>
+        </p>
       </Wrapper>
       {done ? (
         <CheckBox onClick={unCheck} check={done}>
-          <img src={checkImg} alt="check" />
+          {disable ? (
+            <Grid color="#FFFFFF" height={30} width={30} />
+          ) : (
+            <img src={checkImg} alt="check" />
+          )}
         </CheckBox>
       ) : (
         <CheckBox onClick={check} check={done}>
-          <img src={checkImg} alt="unCheck" />
+          {disable ? (
+            <Grid color="#8FC549" height={30} width={30} />
+          ) : (
+            <img src={checkImg} alt="unCheck" />
+          )}
         </CheckBox>
       )}
     </HabitContent>
@@ -59,7 +79,7 @@ const Wrapper = styled.div`
     margin: 0px 0px 7px 15px;
     color: #666666;
     font-size: 20px;
-    font-weight: 400;
+    font-weight: 500;
   }
 
   p {
@@ -68,6 +88,14 @@ const Wrapper = styled.div`
     font-size: 13px;
     font-weight: 400;
   }
+`;
+
+const HighText = styled.strong`
+  color: ${(props) => (props.done ? "#8fc549" : "#666666")};
+`;
+
+const HighScore = styled.strong`
+  color: ${(props) => (props.isHigh && props.done ? "#8fc549" : "#666666")};
 `;
 
 const CheckBox = styled.div`
