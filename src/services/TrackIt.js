@@ -48,4 +48,31 @@ function getTodayHabits(auth) {
   return promise;
 }
 
-export { postSignUp, postSignIn, postHabit, getHabits, deleteHabit, getTodayHabits };
+function checkDoneHabit(habitId, auth) {
+  const promise = axios.post(`${BASE_URL}/habits/${habitId}/check`, {}, {
+    headers: {
+      Authorization: `Bearer ${auth}`
+    }
+  });
+  return promise;
+}
+
+function uncheckDoneHabit(habitId, auth) {
+  const promise = axios.post(`${BASE_URL}/habits/${habitId}/uncheck`, {}, {
+    headers: {
+      Authorization: `Bearer ${auth}`,
+    },
+  });
+  return promise;
+}
+
+export {
+  postSignUp,
+  postSignIn,
+  postHabit,
+  getHabits,
+  deleteHabit,
+  getTodayHabits,
+  checkDoneHabit,
+  uncheckDoneHabit
+};
