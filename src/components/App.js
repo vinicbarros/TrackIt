@@ -8,12 +8,12 @@ import SignUpPage from "./SignUpPage";
 import GlobalStyle from "./style/GlobalStyle";
 
 import UserContext from "./Context/UserContext";
-import LoginContext from "./Context/LoginContext";
 import Today from "./Today/Today";
+import Historic from "./Historic/Historic";
+import PrivatePage from "./PrivatePage";
 
 function App() {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState("");
   const [refresh, setRefresh] = useState(false);
   const [percent, setPercent] = useState(0);
 
@@ -22,17 +22,37 @@ function App() {
       <GlobalStyle />
       <UserContext.Provider
         value={{ user, setUser, refresh, setRefresh, percent, setPercent }}
-        >
-        <LoginContext.Provider value={{ token, setToken }}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<LoginPage />} />
-              <Route path="/cadastro" element={<SignUpPage />} />
-              <Route path="/habitos" element={<Habits />} />
-              <Route path="/hoje" element={<Today />} />
-            </Routes>
-          </BrowserRouter>
-        </LoginContext.Provider>
+      >
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/cadastro" element={<SignUpPage />} />
+            <Route
+              path="/habitos"
+              element={
+                <PrivatePage>
+                  <Habits />
+                </PrivatePage>
+              }
+            />
+            <Route
+              path="/hoje"
+              element={
+                <PrivatePage>
+                  <Today />
+                </PrivatePage>
+              }
+            />
+            <Route
+              path="/historico"
+              element={
+                <PrivatePage>
+                  <Historic />
+                </PrivatePage>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
       </UserContext.Provider>
     </>
   );

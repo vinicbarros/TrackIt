@@ -2,6 +2,17 @@ import axios from "axios";
 
 const BASE_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit";
 
+function createHeaders() {
+  const auth = JSON.parse(localStorage.getItem("trackit"));
+  const config = {
+    headers: {
+      Authorization: `Bearer ${auth.token}`,
+    },
+  };
+
+  return config;
+}
+
 function postSignUp(register) {
   const promise = axios.post(`${BASE_URL}/auth/sign-up`, register);
   return promise;
@@ -12,57 +23,53 @@ function postSignIn(login) {
   return promise;
 }
 
-function postHabit(habit, auth) {
-  const promise = axios.post(`${BASE_URL}/habits`, habit, {
-    headers: {
-      Authorization: `Bearer ${auth}`,
-    },
-  });
+function postHabit(habit) {
+  const config = createHeaders();
+  const promise = axios.post(`${BASE_URL}/habits`, habit, config);
   return promise;
 }
 
 function getHabits(auth) {
-  const promise = axios.get(`${BASE_URL}/habits`, {
-    headers: {
-      Authorization: `Bearer ${auth}`,
-    },
-  });
+  const config = createHeaders();
+  const promise = axios.get(`${BASE_URL}/habits`, config);
   return promise;
 }
 
-function deleteHabit(habitId, auth) {
-  const promise = axios.delete(`${BASE_URL}/habits/${habitId}`, {
-    headers: {
-      Authorization: `Bearer ${auth}`,
-    },
-  });
+function deleteHabit(habitId) {
+  const config = createHeaders();
+  const promise = axios.delete(`${BASE_URL}/habits/${habitId}`, config);
   return promise;
 }
 
-function getTodayHabits(auth) {
-  const promise = axios.get(`${BASE_URL}/habits/today`, {
-    headers: {
-      Authorization: `Bearer ${auth}`,
-    },
-  });
+function getTodayHabits() {
+  const config = createHeaders();
+  const promise = axios.get(`${BASE_URL}/habits/today`, config);
   return promise;
 }
 
-function checkDoneHabit(habitId, auth) {
-  const promise = axios.post(`${BASE_URL}/habits/${habitId}/check`, {}, {
-    headers: {
-      Authorization: `Bearer ${auth}`
-    }
-  });
+function checkDoneHabit(habitId) {
+  const config = createHeaders();
+  const promise = axios.post(
+    `${BASE_URL}/habits/${habitId}/check`, 
+    {}, 
+    config
+    );
   return promise;
 }
 
-function uncheckDoneHabit(habitId, auth) {
-  const promise = axios.post(`${BASE_URL}/habits/${habitId}/uncheck`, {}, {
-    headers: {
-      Authorization: `Bearer ${auth}`,
-    },
-  });
+function uncheckDoneHabit(habitId) {
+  const config = createHeaders();
+  const promise = axios.post(
+    `${BASE_URL}/habits/${habitId}/uncheck`,
+    {},
+    config
+  );
+  return promise;
+}
+
+function getDailyHabits() {
+  const config = createHeaders();
+  const promise = axios.get(`${BASE_URL}/habits/history/daily`, config);
   return promise;
 }
 
@@ -74,5 +81,6 @@ export {
   deleteHabit,
   getTodayHabits,
   checkDoneHabit,
-  uncheckDoneHabit
+  uncheckDoneHabit,
+  getDailyHabits
 };

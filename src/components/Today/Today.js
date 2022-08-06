@@ -1,24 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { ThreeDots } from "react-loader-spinner";
+import { getTodayHabits } from "../../services/TrackIt";
 
 import today from "../Utilities/setday";
-
-import { getTodayHabits } from "../../services/TrackIt";
-import LoginContext from "../Context/LoginContext";
-import Navbar from "../Utilities/Navbar";
-import Footer from "../Utilities/Footer";
 import TodayHabit from "./TodayHabit";
 import UserContext from "../Context/UserContext";
 
 export default function Today() {
   const [todayHabits, setTodayHabits] = useState([]);
   const [ showScreen, setShowScreen ] = useState(false);
-  const { token } = useContext(LoginContext);
   const { refresh, setRefresh, percent, setPercent } = useContext(UserContext);
 
   useEffect(() => {
-    getTodayHabits(token)
+    getTodayHabits()
       .then((response) => {
         setTodayHabits(response.data);
         const done = response.data.filter((ths) => ths.done);
@@ -34,11 +29,10 @@ export default function Today() {
       })
       .catch((error) => console.log(error));
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [token, refresh]);
+    }, [refresh]);
 
   return (
     <>
-      <Navbar />
       {!showScreen ? (
         <Load>
           <ThreeDots color="#00BFFF" height={80} width={80} />
@@ -65,8 +59,6 @@ export default function Today() {
           </HabitsCheckBox>
         </TodayContent>
       )}
-
-      <Footer />
     </>
   );
 }

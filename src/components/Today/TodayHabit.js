@@ -1,19 +1,17 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { Grid } from "react-loader-spinner";
 import checkImg from "../../assets/img/Group.svg";
 import { checkDoneHabit, uncheckDoneHabit } from "../../services/TrackIt";
-import LoginContext from "../Context/LoginContext";
 
 export default function TodayHabit({ todayHabits, setRefresh, refresh }) {
   const done = todayHabits.done;
   const isHigh = (todayHabits.currentSequence >= todayHabits.highestSequence);
-  const { token } = useContext(LoginContext);
   const [disable, setDisable] = useState(false);
 
   function check() {
     setDisable(true);
-    checkDoneHabit(todayHabits.id, token)
+    checkDoneHabit(todayHabits.id)
       .then((response) => {
         setRefresh(!refresh);
         setDisable(false);
@@ -23,7 +21,7 @@ export default function TodayHabit({ todayHabits, setRefresh, refresh }) {
 
   function unCheck() {
     setDisable(true);
-    uncheckDoneHabit(todayHabits.id, token)
+    uncheckDoneHabit(todayHabits.id)
       .then((response) => {
         setRefresh(!refresh);
         setDisable(false);

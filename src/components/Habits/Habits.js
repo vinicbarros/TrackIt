@@ -2,22 +2,19 @@ import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { ThreeDots } from "react-loader-spinner";
 import { getHabits } from "../../services/TrackIt";
-import LoginContext from "../Context/LoginContext";
+
 import UserContext from "../Context/UserContext";
-import Footer from "../Utilities/Footer";
-import Navbar from "../Utilities/Navbar";
 import Habit from "./Habit";
 import HabitsForm from "./HabitsForm";
 
 export default function Habits() {
-  const { token } = useContext(LoginContext);
   const { refresh } = useContext(UserContext);
   const [userHabits, setUserHabits] = useState([]);
   const [createHabit, setCreateHabit] = useState(false);
   const [ showScreen, setShowScreen ] = useState(false);
 
   useEffect(() => {
-    getHabits(token)
+    getHabits()
       .then((response) => setUserHabits(response.data))
       .catch((error) => console.log(error.response));
       setShowScreen(true);
@@ -26,7 +23,6 @@ export default function Habits() {
 
   return (
     <>
-      <Navbar />
       {!showScreen ? (
         <Load>
           <ThreeDots color="#00BFFF" height={80} width={80} />
@@ -59,8 +55,6 @@ export default function Habits() {
           </BoxHabits>
         </ContentHabits>
       )}
-
-      <Footer />
     </>
   );
 }

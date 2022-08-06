@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import LoginContext from "../Context/LoginContext";
 import { postHabit } from "../../services/TrackIt";
 import WeekDay from "./WeekDay";
 import UserContext from "../Context/UserContext";
@@ -15,7 +14,6 @@ export default function HabitsForm({ setCreateHabit, create }) {
     days,
   });
 
-  const { token } = useContext(LoginContext);
   const { setRefresh, refresh } = useContext(UserContext);
 
   useEffect(() => {
@@ -27,7 +25,7 @@ export default function HabitsForm({ setCreateHabit, create }) {
     e.preventDefault();
     setDisabled(!disabled);
 
-    postHabit(habit, token)
+    postHabit(habit)
       .then((res) => {
         setDisabled(false);
         console.log(res.data);

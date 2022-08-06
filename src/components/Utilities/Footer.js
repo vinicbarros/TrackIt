@@ -28,7 +28,7 @@ export default function Footer() {
           />
         </WrapCircle>
       </Link>
-      <Link to="/">Histórico</Link>
+      <Link to="/historico">Histórico</Link>
     </FooterContent>
   );
 }

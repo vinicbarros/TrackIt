@@ -1,17 +1,15 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import { deleteHabit } from "../../services/TrackIt";
-import LoginContext from "../Context/LoginContext";
 import UserContext from "../Context/UserContext";
 import daysNumber from "../Utilities/daysNumber";
 
 export default function Habit({ habit, daysSelected }) {
-  const { token } = useContext(LoginContext);
   const { setRefresh, refresh } = useContext(UserContext);
 
   function deleteHabits() {
     if (window.confirm("Você quer deletar este hábito?")) {
-      deleteHabit(habit.id, token)
+      deleteHabit(habit.id)
         .then((resp) => {
           console.log(resp);
           setRefresh(!refresh);

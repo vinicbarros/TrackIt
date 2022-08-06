@@ -7,7 +7,6 @@ import { postSignIn } from "../services/TrackIt";
 import UserContext from "./Context/UserContext";
 
 import Logo from "../assets/img/Logo.svg";
-import LoginContext from "./Context/LoginContext";
 
 export default function LoginPage() {
   const [disabled, setDisabled] = useState(false);
@@ -15,7 +14,6 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState("password");
 
   const { setUser } = useContext(UserContext);
-  const { setToken } = useContext(LoginContext);
   const navigate = useNavigate();
 
   function handleForm(e) {
@@ -24,7 +22,11 @@ export default function LoginPage() {
     postSignIn(userLogin)
       .then((response) => {
         setUser(response.data);
-        setToken(response.data.token)
+        const JSONauth = JSON.stringify({
+          token: response.data.token,
+          image: response.data.image,
+        });
+        localStorage.setItem("trackit", JSONauth);
         setDisabled(false);
         navigate("/hoje");
       })
@@ -143,7 +145,7 @@ const Container = styled.section`
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: ${ (props) => (props.disabled ? "0.7" : "1")};
+    opacity: ${(props) => (props.disabled ? "0.7" : "1")};
   }
 
   a {

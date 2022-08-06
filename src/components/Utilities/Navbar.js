@@ -1,16 +1,12 @@
-import { useContext } from "react";
 import styled from "styled-components";
-import UserContext from "../Context/UserContext";
 
-export default function Navbar() {
-
-    const { user } = useContext(UserContext);
+export default function Navbar({image}) {
 
     return (
         <ContentHeader>
             <div>
                 <h1>TrackIt</h1>
-                <img src={user.image} alt="User"/>
+                <img src={image} alt="User"/>
             </div>
         </ContentHeader>
     );
