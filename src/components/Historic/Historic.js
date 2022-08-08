@@ -4,19 +4,45 @@ import styled from "styled-components";
 import Calendar from "react-calendar";
 import dayjs from "dayjs";
 import "react-calendar/dist/Calendar.css";
-import { getTodayHabits } from "../../services/TrackIt";
+import { getDailyHabits } from "../../services/TrackIt";
+import HabitHistoric from "./HabitHistoric";
 
 export default function Historic() {
-  //const [value, onChange] = useState(new Date());
   const [dailyHabits, setDailyHabits] = useState([]);
   const [days, setDays] = useState([]);
-  console.log(dailyHabits);
+  const [disable, setDisable] = useState(false);
+  const [numDay, setNumDay] = useState(undefined);
 
   useEffect(() => {
-    getTodayHabits().then((response) => {
-      setDailyHabits(response);
-    });
+    getDailyHabits()
+      .then((response) => {
+        setDailyHabits(response.data);
+        setDays(response.data.map((d) => d.day));
+      })
+      .catch(() => alert("Ocorreu um erro ao ver o histórico!"));
   }, []);
+
+  function showTiles({ date }) {
+    const thisDay = dayjs().format("DD/MM/YYYYY");
+    const dates = dayjs(date).format("DD/MM/YYYY");
+
+    if (days.includes(dates) && dates !== thisDay) {
+      const habits = dailyHabits[days.indexOf(dates)].habits;
+      if (habits.some((h) => h.done === false)) {
+        return "undone";
+      } else {
+        return "done";
+      }
+    }
+  }
+
+  function selectHabitsDay(day) {
+    const thisDay = dayjs(day).format("DD/MM/YYYY");
+    if (days.includes(thisDay)) {
+      setNumDay(days.indexOf(thisDay));
+      setDisable(true);
+    }
+  }
 
   return (
     <>
@@ -28,25 +54,44 @@ export default function Historic() {
             formatShortWeekday={(locale, date) =>
               ["Dom", "Seg", "Ter", "Quar", "Qui", "Sex", "Sab"][date.getDay()]
             }
+            tileClassName={showTiles}
+            onClickDay={selectHabitsDay}
           />
         </Wrapper>
+        <Box>
+          {disable ? (
+            <>
+              <h2>{dailyHabits[numDay].day}</h2>
+              <div>
+                {dailyHabits[numDay].habits.map((h, i) => (
+                  <HabitHistoric key={i} name={h.name} done={h.done} />
+                ))}
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
+        </Box>
       </Content>
     </>
   );
 }
 
 const Content = styled.section`
-  height: 100vh;
+  min-height: 100vh;
   padding-top: 98px;
+  padding-bottom: 100px;
   background: #f2f2f2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   h1 {
-    margin-left: 18px;
     width: 90%;
     color: #126ba5;
     font-size: 22px;
     font-weight: 400;
-    margin-bottom: 11px;
+    margin-bottom: 20px;
   }
 `;
 
@@ -75,5 +120,29 @@ const Wrapper = styled.div`
 
   .react-calendar__tile {
     margin-top: 23px !important;
+  }
+
+  .done {
+    clip-path: circle(33%);
+    background-color: #8cc654;
+  }
+
+  .undone {
+    clip-path: circle(33%);
+    background-color: #f56e7c;
+  }
+`;
+
+const Box = styled.main`
+  margin-top: 50px;
+  width: 90%;
+
+  h2 {
+    font-size: 20px;
+    color: #126ba5;
+  }
+
+  section + section {
+    margin-top: 12px;
   }
 `;
