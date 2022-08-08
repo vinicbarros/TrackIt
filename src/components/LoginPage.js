@@ -31,7 +31,6 @@ export default function LoginPage() {
         navigate("/hoje");
       })
       .catch((error) => {
-        console.log(error);
         alert("E-mail ou senha incorretos!");
         setDisabled(false);
       });

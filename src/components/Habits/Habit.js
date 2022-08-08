@@ -11,10 +11,9 @@ export default function Habit({ habit, daysSelected }) {
     if (window.confirm("Você quer deletar este hábito?")) {
       deleteHabit(habit.id)
         .then((resp) => {
-          console.log(resp);
           setRefresh(!refresh);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => alert("Ocorreu um erro ao deletar o hábito!"));
     }
   }
 
@@ -46,6 +45,7 @@ const HabitBox = styled.section`
   border-radius: 5px;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 
   h2 {
     margin: 13px 0px 8px 15px;

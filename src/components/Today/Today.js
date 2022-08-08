@@ -27,7 +27,7 @@ export default function Today() {
         }
         setShowScreen(true);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => alert("Ocorreu um erro ao ver os hábitos do dia!"));
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refresh]);
 

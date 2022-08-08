@@ -28,7 +28,6 @@ export default function HabitsForm({ setCreateHabit, create }) {
     postHabit(habit)
       .then((res) => {
         setDisabled(false);
-        console.log(res.data);
         setRefresh(!refresh);
         setCreateHabit(false);
         setDays([]);

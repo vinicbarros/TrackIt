@@ -16,7 +16,7 @@ export default function TodayHabit({ todayHabits, setRefresh, refresh }) {
         setRefresh(!refresh);
         setDisable(false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => alert("Ocorreu um erro ao marcar o hábito!"));
   }
 
   function unCheck() {
@@ -26,7 +26,7 @@ export default function TodayHabit({ todayHabits, setRefresh, refresh }) {
         setRefresh(!refresh);
         setDisable(false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => alert("Ocorreu um erro ao desmarcar o hábito!"));
   }
 
   return (

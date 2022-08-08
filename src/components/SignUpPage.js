@@ -14,7 +14,6 @@ export default function SignUpPage() {
     image: "",
     password: "",
   });
-  console.log(formValue);
 
   const navigate = useNavigate();
 
@@ -24,12 +23,10 @@ export default function SignUpPage() {
 
     postSignUp(formValue)
     .then((response) => {
-      console.log(response.data);
       navigate("/");
     })
     .catch((error) => {
       setDisabled(false);
-      console.log(error.response.data);
       alert(`
       ${error.response.data.message} 
       Preencha os campos novamente!`);

@@ -16,7 +16,7 @@ export default function Habits() {
   useEffect(() => {
     getHabits()
       .then((response) => setUserHabits(response.data))
-      .catch((error) => console.log(error.response));
+      .catch((error) => alert("Ocorreu um erro ao ver os hábitos!"));
       setShowScreen(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refresh]);
