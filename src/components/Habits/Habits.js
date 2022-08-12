@@ -9,15 +9,15 @@ import HabitsForm from "./HabitsForm";
 
 export default function Habits() {
   const { refresh } = useContext(UserContext);
-  const [userHabits, setUserHabits] = useState([]);
+  const [userHabits, setUserHabits] = useState(null);
   const [createHabit, setCreateHabit] = useState(false);
-  const [ showScreen, setShowScreen ] = useState(false);
+  const [showScreen, setShowScreen] = useState(false);
 
   useEffect(() => {
     getHabits()
       .then((response) => setUserHabits(response.data))
       .catch((error) => alert("Ocorreu um erro ao ver os hábitos!"));
-      setShowScreen(true);
+    setShowScreen(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refresh]);
 
@@ -42,7 +42,9 @@ export default function Habits() {
           </span>
           <HabitsForm create={createHabit} setCreateHabit={setCreateHabit} />
           <BoxHabits>
-            {userHabits.length === 0 ? (
+            {userHabits === null ? (<Load>
+              <ThreeDots color="#00BFFF" height={80} width={80} />
+            </Load>) : userHabits.length === 0 ? (
               <p>
                 Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
                 para começar a trackear!

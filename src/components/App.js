@@ -3,8 +3,8 @@ import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Habits from "./Habits/Habits";
-import LoginPage from "./LoginPage";
-import SignUpPage from "./SignUpPage";
+import LoginPage from "./Login/LoginPage";
+import SignUpPage from "./SignUp/SignUpPage";
 import GlobalStyle from "./style/GlobalStyle";
 
 import UserContext from "./Context/UserContext";
