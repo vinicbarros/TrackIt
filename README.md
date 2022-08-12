@@ -1,7 +1,7 @@
 # Trackit
 
 An easier way to control your daily habits! Create, manage and everything to improve your routine! 
-
+      <img src="./src/assets/img/TrackIt-Showcase.gif" />
  <p>
     <br />
     <a href="https://github.com/vinicbarros/TrackIt"><strong>View the files here</strong></a>
