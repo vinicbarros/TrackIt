@@ -9,6 +9,9 @@ An easier way to control your daily habits! Create, manage and everything to imp
       <img src="./src/assets/img/TrackIt-Showcase.gif" align="center" />
   </a>
   
+  </p>
+
+ <p align="center">
     <br />
     <a href="https://github.com/vinicbarros/TrackIt"><strong>View the files here</strong></a>
     <br />
