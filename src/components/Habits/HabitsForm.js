@@ -52,6 +52,7 @@ export default function HabitsForm({ setCreateHabit, create }) {
     <Content create={create}>
       <form onSubmit={sendHabit}>
         <input
+          autoComplete="off"
           disabled={disabled}
           onChange={handleInput}
           name="name"
