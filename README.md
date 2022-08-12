@@ -4,10 +4,13 @@ An easier way to control your daily habits! Create, manage and everything to imp
 
 <br />
 
-  <a href="https://github.com/vinicbarros/TrackIt">
+<p align="center">
+    <a href="https://github.com/vinicbarros/TrackIt">
       <img src="./src/assets/img/TrackIt-Showcase.gif" align="center" />
   </a>
   
+  </p>
+
  <p>
     <br />
     <a href="https://github.com/vinicbarros/TrackIt"><strong>View the files here</strong></a>
