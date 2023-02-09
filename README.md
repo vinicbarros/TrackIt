@@ -1,6 +1,6 @@
 <div align="center"><img src="https://i.imgur.com/6GeIlQW.gif"></img></div>
 <hr>
-<h2 align=center>TrackId - A control habit app!</h2>
+<h2 align=center>TrackIt - A control habit app!</h2>
 <h3 align=center>Front-End Web Project</h3>
 <hr>
 <h4 align=center>This is an easier way to control your daily habits! Create, manage and everything to improve your routine! It was built with React.js</h4>
